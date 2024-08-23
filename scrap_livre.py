@@ -19,7 +19,6 @@ def scrap_livre(url) :
        description_livre.append(desc.string)
     description = description_livre[3]
 
-
     info_livre = []
     infos = soup.find_all("td")
     for info in infos :

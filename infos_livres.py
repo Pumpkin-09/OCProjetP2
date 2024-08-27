@@ -2,9 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 from urllib.parse import urljoin
-from pprint import pprint
-
-url = "https://books.toscrape.com/catalogue/category/books/fiction_10/index.html"
 
 def Soup(url) :
     page = requests.get(url)
@@ -56,13 +53,3 @@ def all_infos_livre(url) :
         desc_livre = [j, description_livre[3], info_livre[0], info_livre[2], info_livre[3], info_livre[5], info_livre[6], titre_livre, catagory_livre, image_couverture]
         donnees_livre.append(desc_livre)
     return donnees_livre
-
-pprint(all_infos_livre(url))
-
-"""
-    with open("donnees_livres.csv", "a") as f:
-        writer = csv.writer(f)
-        for k, v in tab_info_livre.items():
-            writer.writerow([k,v])
-"""
-

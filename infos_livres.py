@@ -24,14 +24,15 @@ def all_infos_livre(url) :
         for i in links :
             link_book.append(i.h3.a.get("href").replace("../../..", "http://books.toscrape.com/catalogue"))
 
-    description_livre = []
     donnees_livre = []
     for j in link_book :
+
+        description_livre =[]
         descriptions = Soup(j).find_all("p")
         for desc in descriptions:
            description_livre.append(desc.string)
         description = description_livre[3]
-
+        
         info_livre = []
         infos = Soup(j).find_all("td")
         for info in infos :
@@ -49,6 +50,6 @@ def all_infos_livre(url) :
         image = Soup(j).find("img")
         image_couverture = urljoin("http://books.toscrape.com/", image.get("src"))
 
-        desc_livre = [j, description_livre[3], info_livre[0], info_livre[2], info_livre[3], info_livre[5], info_livre[6], titre_livre, catagory_livre, image_couverture]
+        desc_livre = [j, info_livre[0],titre_livre, info_livre[3], info_livre[2], info_livre[5], description_livre[3], catagory_livre, info_livre[6], image_couverture]
         donnees_livre.append(desc_livre)
     return donnees_livre

@@ -1,6 +1,9 @@
+from genericpath import exists
+from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import os
 
 def Soup(url) :
     page = requests.get(url)
@@ -39,7 +42,8 @@ def all_infos_livre(url) :
             info_livre.append(info.string)
 
         titre = Soup(j).find("h1")
-        titre_livre = titre.string
+        t_l = titre.string
+        titre_livre = t_l.replace("/", " ")
 
         categorys = []
         category = Soup(j).find_all("a")
@@ -50,6 +54,18 @@ def all_infos_livre(url) :
         image = Soup(j).find("img")
         image_couverture = urljoin("http://books.toscrape.com/", image.get("src"))
 
-        desc_livre = [j, info_livre[0],titre_livre, info_livre[3], info_livre[2], info_livre[5], description_livre[3], catagory_livre, info_livre[6], image_couverture]
+        if not exists("images"):
+            os.mkdir("images")
+        nom_du_fichier = titre_livre + ".jpg"
+        chemin_image = os.path.join("images", nom_du_fichier)
+
+        f = open(chemin_image, "wb")
+        response = requests.get(image_couverture)
+        f.write(response.content)
+        f.close()
+
+        
+
+        desc_livre = [j, info_livre[0],titre_livre, info_livre[3], info_livre[2], info_livre[5], description_livre[3], catagory_livre, info_livre[6], chemin_image]
         donnees_livre.append(desc_livre)
     return donnees_livre

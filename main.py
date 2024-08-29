@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import csv
+from genericpath import exists
+from pathlib import Path
+import os
 from urllib.parse import urljoin
 from infos_livres import all_infos_livre
 from creation_csv import impression
@@ -14,6 +17,10 @@ def main(url):
     cat_links = []
     cat_name = []
 
+    if not exists("dossier livres") :
+        os.mkdir("dossier livres")
+    chemin = "dossier livres"
+
     categorys_scrap = Soup(url).find("div", class_="side_categories")
     categories = categorys_scrap.find("ul").find("li").find("ul")
 
@@ -25,7 +32,7 @@ def main(url):
         cat_links.append("https://books.toscrape.com/" + cat.get("href"))
 
     for i,j in zip(cat_name,cat_links) :
-        impression(all_infos_livre(j), i)
+        impression(all_infos_livre(j), i, chemin)
 
         
 

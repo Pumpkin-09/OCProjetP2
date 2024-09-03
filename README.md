@@ -28,7 +28,9 @@ python --version
 '''
 
 si python n'est pas installe, suivier la documentation suivante en fonction de votre environement :
+
 [windows](https://docs.python.org/fr/3/using/windows.html)
+
 [linux](https://docs.python.org/fr/3/using/unix.html)
 [mac](https://docs.python.org/fr/3/using/mac.html)
 

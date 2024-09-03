@@ -40,7 +40,8 @@ lancé votre invite de commande, placez vous dans le dossier de votre choix avec
 `git clone https://github.com/Pumpkin-09/OCProjetP2.git`
 
 Placez vous ensuite dans le dossier OCProjetP2, toujours avec la commande cd, vous allez créé puis activez notre environement virtuel. 
-Sous linux tapé les commandes suivante :
+#### Utilisé les commandes suivante :
+##### Sous linux :
 
 `python3 -m venv env`
 
@@ -50,7 +51,7 @@ pour la création de l'environement, puis :
 
 pour l'activé
 
-Sous windows :
+##### Sous windows :
 
 `python -m venv env`
 
@@ -66,12 +67,12 @@ il ne reste plus qu'a installer les packages :
 
 
 Et voila, vous pouvez maintenant lancer le script grace a la commande qui suit
-sous linux :
+##### sous linux :
 
 `python3 main.py`
 
 
-Sous windows :
+##### Sous windows :
 
 `python main.py`
 

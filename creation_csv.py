@@ -4,12 +4,12 @@ def impression(infos, nom, chemin) :
     en_tete = ["product_page_url", "universal_ product_code(upc)", "title", "price_including_tax", "price_excluding_tax", "number_available", "product_description", "category", "review_rating","image_url", "image"]
 
     """
-    fonction qui permet de crée un fichier csv. necessite trois parametres: 
-    les données, qui seront integré au fichier csv. 
-    le nom, qui serviras à nomé le fichier
-    le chemin d'acces, pour decider d'ou crée le fichier.
-    à chaque appel de cette fonction, si le nom du fichier est identique les données deja présente seront écrasé.
-    le delimiteur des donnees est ' , ' 
+    Fonction qui permet de créer un fichier csv. Nécessite trois paramètres: 
+    les données, qui seront integrées au fichier csv. 
+    le nom, qui servira à nommer le fichier
+    le chemin d'accès, pour decider où créer le fichier.
+    A chaque appel de cette fonction, si le nom du fichier est identique, les données déjà présentes seront écrasées.
+    Le délimiteur des données est ' , ' 
     """
     chemin_fichier = chemin + "/" + nom + ".csv"
     with open(chemin_fichier, "w") as f :

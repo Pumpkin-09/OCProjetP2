@@ -12,9 +12,9 @@ def Soup(url) :
 def all_infos_livre(url) :
 
     """
-    fonction qui prend en parametre un lien url.
-    elle va scrap des donnees via le lien.
-    elle renvoit une liste de 11 elements
+    Fonction qui prend en paramètre un lien url.
+    Elle va scrap des données via le lien.
+    Elle renvoit une liste de 11 éléments
     """
 
     new_link = []

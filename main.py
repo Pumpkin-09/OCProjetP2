@@ -19,11 +19,11 @@ def main(url):
     cat_links = []
     cat_name = []
     """
-    fonction qui va récuperer les liens de toutes les categories.
-    appeler la fonction all_infos_livres afin de recuperer tout les informations des differents livres.
-    appeler la fonction impression pour les enregistrer dans des fichier csv.
-    elle profite de la recuperation des liens pour extraire le nom des categories,
-    et la fonction impression va les utiliser pour nomer les fichiers csv.
+    Fonction qui va récuperer les liens de toutes les catégories.
+    Appeler la fonction all_infos_livres afin de récuperer toutes les informations des différents livres.
+    Appeler la fonction impression pour les enregistrer dans des fichiers csv.
+    Elle profite de la récuperation des liens pour extraire le nom des catégories,
+    et la fonction impression va les utiliser pour nommer les fichiers csv.
     """
 
     if not exists("dossier livres") :

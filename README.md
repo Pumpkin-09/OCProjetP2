@@ -23,8 +23,7 @@ Les données, sont générées à la racines du projet, dans un dossier nomé "d
 ## Instalation
 ### Python
 Commencer par verifier si python est installé. Pour ce faire, ouvré l'invite de commande et saisisé :
-
-' python --version '
+' python --version
 
 si python n'est pas installe, suivier la documentation suivante en fonction de votre environement :
 [windows](https://docs.python.org/fr/3/using/windows.html)
@@ -32,10 +31,11 @@ si python n'est pas installe, suivier la documentation suivante en fonction de v
 [mac](https://docs.python.org/fr/3/using/mac.html)
 
 ### le projet
-lancé votre invite de commande, placévous dans le dossier de votre choix avec la commande cd puis cloné le repository :
+lancé votre invite de commande, placez vous dans le dossier de votre choix avec la commande cd puis cloné le repository :
+
 ' git clone https://github.com/Pumpkin-09/OCProjetP2.git '
 
-Placez vous ensuite dans le dossier OCProjetP2, toujours avec la commande cd, ,ous allez créé puis activé notre environement virtuel. 
+Placez vous ensuite dans le dossier OCProjetP2, toujours avec la commande cd, vous allez créé puis activez notre environement virtuel. 
 Sous linux tapé les commandes suivante :
 
 ' python3 -m venv env '

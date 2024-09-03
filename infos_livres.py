@@ -10,6 +10,13 @@ def Soup(url) :
     return BeautifulSoup(page.content, "html.parser")
 
 def all_infos_livre(url) :
+
+    """
+    fonction qui prend en parametre un lien url.
+    elle va scrap des donnees via le lien.
+    elle renvoit une liste de 11 elements
+    """
+
     new_link = []
     link_book = []
     new_link.append(url)
@@ -66,6 +73,6 @@ def all_infos_livre(url) :
 
         
 
-        desc_livre = [j, info_livre[0],titre_livre, info_livre[3], info_livre[2], info_livre[5], description_livre[3], catagory_livre, info_livre[6], chemin_image]
+        desc_livre = [j, info_livre[0],titre_livre, info_livre[3], info_livre[2], info_livre[5], description_livre[3], catagory_livre, info_livre[6], image_couverture, chemin_image]
         donnees_livre.append(desc_livre)
     return donnees_livre

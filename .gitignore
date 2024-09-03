@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+
+env/
+dossier livres/
+images/
+__pycache__/
+mail.txt
+retour cProfile.txt

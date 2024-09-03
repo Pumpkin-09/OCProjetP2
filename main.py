@@ -10,7 +10,7 @@ from creation_csv import impression
 url = "http://books.toscrape.com"
 
 def Soup(url) :
-    #fonction qui permet, via une URL, de récuperer le code HTML grace à requests
+    #Fonction qui permet, via une URL, de récupérer le code HTML grâce à requests
     # et de parser ces données, via BeautifulSoup 
     page = requests.get(url)
     return BeautifulSoup(page.content, "html.parser")

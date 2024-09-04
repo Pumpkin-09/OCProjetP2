@@ -3,12 +3,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import os
 
-def Soup(url) :
-    page = requests.get(url)
-    return BeautifulSoup(page.content, "html.parser")
-
 def all_infos_livre(url, chemin_images) :
-
     """
     Fonction qui prend en paramètre un lien url.
     Elle va scrap des données via le lien.
@@ -18,7 +13,9 @@ def all_infos_livre(url, chemin_images) :
     new_link = []
     link_book = []
     new_link.append(url)
-    pages = Soup(url).find("li", class_="next")
+    page = requests.get(url)
+    soupe = BeautifulSoup(page.content, "html.parser")
+    pages = soupe.find("li", class_="next")
     while pages != None :
         next_page = pages.a.get("href")
         url_modif = url.replace("index.html", next_page)
@@ -28,34 +25,38 @@ def all_infos_livre(url, chemin_images) :
         pages = soup.find("li", class_="next")
     
     for next_page in new_link :
-        links = Soup(next_page).find_all("article")
+        page = requests.get(next_page)
+        link = BeautifulSoup(page.content, "html.parser")
+        links = link.find_all("article")
         for i in links :
             link_book.append(i.h3.a.get("href").replace("../../..", "http://books.toscrape.com/catalogue"))
-
+    
     donnees_livre = []
     for j in link_book :
+        page = requests.get(j)
+        s = BeautifulSoup(page.content, "html.parser")    
         #Récupération de la description du livre
-        descriptions = Soup(j).find("div", class_="sub-header")
+        descriptions = s.find("div", class_="sub-header")
         description_livre = descriptions.find_next("p").text
         
         #Récupération du UPC, des prix, du nombre en stock et du range
         info_livre = []
-        infos = Soup(j).find_all("td")
+        infos = s.find_all("td")
         for info in infos :
             info_livre.append(info.string)
 
         #Récupération et si besoin, modification du titre
-        titre = Soup(j).find("h1")
+        titre = s.find("h1")
         t_l = titre.string
         titre_livre = t_l.replace("/", " ")
 
         #Récupération du nom de la catégorie du livre
-        category = Soup(j).find("ul", class_="breadcrumb")
+        category = s.find("ul", class_="breadcrumb")
         cat = category.find_all("li")
         catagory_livre = cat[2].text.strip()
 
         #Récupération de l'URL de l'image du livre
-        image = Soup(j).find("img")
+        image = s.find("img")
         image_couverture = urljoin("http://books.toscrape.com/", image.get("src"))
         
         #Téléchargement de l'image dans le dossier "images"

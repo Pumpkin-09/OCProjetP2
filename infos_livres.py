@@ -1,5 +1,3 @@
-from genericpath import exists
-from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -9,7 +7,7 @@ def Soup(url) :
     page = requests.get(url)
     return BeautifulSoup(page.content, "html.parser")
 
-def all_infos_livre(url) :
+def all_infos_livre(url, chemin_images) :
 
     """
     Fonction qui prend en paramètre un lien url.
@@ -59,14 +57,11 @@ def all_infos_livre(url) :
         #Récupération de l'URL de l'image du livre
         image = Soup(j).find("img")
         image_couverture = urljoin("http://books.toscrape.com/", image.get("src"))
-
-        #Création d'un dossier image et téléchargement de l'image dans le dossier
+        
+        #Téléchargement de l'image dans le dossier "images"
         #L'image est également renomé en fonction du nom du livre.
-        if not exists("images"):
-            os.mkdir("images")
         nom_du_fichier = titre_livre + ".jpg"
-        chemin_image = os.path.join("images", nom_du_fichier)
-
+        chemin_image = os.path.join(chemin_images, nom_du_fichier)
         f = open(chemin_image, "wb")
         response = requests.get(image_couverture)
         f.write(response.content)

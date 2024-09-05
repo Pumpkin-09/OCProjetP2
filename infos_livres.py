@@ -7,7 +7,6 @@ def all_infos_livre(url, chemin_images) :
     """
     Fonction qui prend en paramètre un lien url.
     Elle va scrap des données via le lien.
-    Elle renvoit une liste de 11 éléments
     """
 
     new_link = []

@@ -1,4 +1,6 @@
 import csv
+import requests
+import os
 
 def impression(infos, nom, chemin_livres) :
     en_tete = ["product_page_url", "universal_ product_code(upc)", "title", "price_including_tax", "price_excluding_tax", "number_available", "product_description", "category", "review_rating","image_url", "image"]
@@ -18,3 +20,16 @@ def impression(infos, nom, chemin_livres) :
         writer.writerow(en_tete)
         for info in infos :
             writer.writerow(info)
+
+
+def telechargement(titre_livre, image_couverture, chemin_images) :
+
+    #Téléchargement de l'image dans le dossier "images"
+    #L'image est également renomé en fonction du nom du livre.
+    nom_du_fichier = titre_livre + ".jpg"
+    chemin_image = os.path.join(chemin_images, nom_du_fichier)
+    f = open(chemin_image, "wb")
+    response = requests.get(image_couverture)
+    f.write(response.content)
+    f.close()
+    return chemin_image

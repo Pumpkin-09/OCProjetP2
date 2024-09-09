@@ -1,23 +1,22 @@
 import requests
 from bs4 import BeautifulSoup
-import csv
 import os
-from urllib.parse import urljoin
-from infos_livres import all_infos_livre
-from creation_csv import impression
+from creation_csv import load_data_books
+import infos_livres
+
 url = "http://books.toscrape.com"
 
 
 def main(url):
-    cat_links = []
-    cat_name = []
+    category_links = []
+    category_names = []
     """
-    Fonction qui va crée "dossier livres" et "dossier images" à l'interieur de celui ci.
-    Puis elle récupere les liens de toutes les catégories.
-    Appeler la fonction all_infos_livres afin de récuperer toutes les informations des différents livres.
-    Appeler la fonction impression pour les enregistrer dans des fichiers csv.
-    Elle profite de la récuperation des liens pour extraire le nom des catégories,
-    et la fonction impression va les utiliser pour nommer les fichiers csv.
+    La fonction crée le dossier "livres" et le dossier "images" à l'intérieur de celui-ci.
+    Ensuite, elle récupère les liens de toutes les catégories, qui va servir à nomé les fichiers csv.
+    Elle appelle la fonction "extract_data_books" pour récupérer toutes les informations des différents livres.
+    puis, elle appelle la fonction "transform_data_books" pour transformer ces données.
+    Elle utilise ensuite la fonction "load_data_books" pour les enregistrer dans des fichiers CSV.
+    Elle appelle également la fonction "load_images" pour télécharger et renommer les images des livres.
     """
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -32,21 +31,24 @@ def main(url):
     if not os.path.exists(dossier_images):
         os.mkdir(dossier_images)
     
-    categorys_scrap = soup.find("div", class_="side_categories")
-    categories = categorys_scrap.find("ul").find("li").find("ul")
+    pages = soup.find("div", class_="side_categories")
+    infos_categorys = pages.find("ul").find("li").find("ul")
 
     # Récupération des noms des catégories
-    for category in categories.children :
-        if category.name :
-            cat_name.append(category.text.strip())
+    for name_categorys in infos_categorys.children :
+        if name_categorys.name :
+            category_names.append(name_categorys.text.strip())
 
     # Récupération des liens des catégories
-    for cat in categories.find_all("a") :
-        cat_links.append("https://books.toscrape.com/" + cat.get("href"))
+    for link_category in infos_categorys.find_all("a") :
+        category_links.append("https://books.toscrape.com/" + link_category.get("href"))
 
-    # Appel de "impression" et de "all_infos_livres" pour récupérer et créer les fichiers csv de données
-    for i,j in zip(cat_name,cat_links) :
-        impression(all_infos_livre(j, dossier_images), i, dossier_livres)
+    # Enregistrement des données dans un fichier CSV nommé en fonction de la catégorie.
+    # #Téléchargement de l'image dans le dossier "images"
+    #L'image est également renomé en fonction du nom du livre.    
+    for i,j in zip(category_names,category_links) :
+        data_books = infos_livres.transformed_data_books(infos_livres.extract_data_books(j), dossier_images)
+        load_data_books(i , dossier_livres, dossier_images, data_books)
 
 
 main(url)

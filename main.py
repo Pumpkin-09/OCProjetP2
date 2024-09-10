@@ -32,15 +32,15 @@ def main(url):
         os.mkdir(dossier_images)
     
     pages = soup.find("div", class_="side_categories")
-    infos_categorys = pages.find("ul").find("li").find("ul")
+    infos_categories = pages.find("ul").find("li").find("ul")
 
     # Récupération des noms des catégories
-    for name_categorys in infos_categorys.children :
+    for name_categorys in infos_categories.children :
         if name_categorys.name :
             category_names.append(name_categorys.text.strip())
 
     # Récupération des liens des catégories
-    for link_category in infos_categorys.find_all("a") :
+    for link_category in infos_categories.find_all("a") :
         category_links.append("https://books.toscrape.com/" + link_category.get("href"))
 
     # Enregistrement des données dans un fichier CSV nommé en fonction de la catégorie.

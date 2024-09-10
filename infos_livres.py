@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import re
 
 
 def extract_data_books(url) :
@@ -38,7 +39,7 @@ def extract_data_books(url) :
 
             # Récupération de la description du livre
             descriptions = soup.find("div", class_="sub-header")
-            description_livre = descriptions.find_next("p").text
+            description_livre = verification_donnees(descriptions.find_next("p").string)
         
             # Récupération du UPC, des prix et du nombre en stock
             info_livre = []
@@ -48,16 +49,16 @@ def extract_data_books(url) :
 
             # Récupération du titre
             titre = soup.find("h1")
-            titre_livre = titre.string
+            titre_livre = verification_donnees(titre.string)
 
             # Récuperation de la note du livre
             rating = soup.find("p", class_="star-rating")
-            book_rating = rating["class"][-1]
+            book_rating = verification_donnees(rating["class"][-1])
 
             # Récupération du nom de la catégorie du livre
             category = soup.find("ul", class_="breadcrumb")
             cat = category.find_all("li")
-            catagory_livre = cat[2].text.strip()
+            catagory_livre = verification_donnees(cat[2].text.strip())
 
             # Récupération de l'URL de l'image du livre
             image = soup.find("img")
@@ -88,7 +89,7 @@ def transformed_data_books(data,chemin_image) :
     for book in data :
         product_page_url = book["product_page_url"]
         universal_product_code = book["universal_product_code (upc)"]
-        title = book["title"].replace("/", ";")
+        title = book["title"]
         price_including_tax = book["price_including_tax"]
         price_excluding_tax = book["price_excluding_tax"]
         number_available = book["number_available"]
@@ -96,6 +97,7 @@ def transformed_data_books(data,chemin_image) :
         category = book["category"]
         review_rating = remplacement_note(book["review_rating"])
         image_url = book["image_url"]
+        nom_image = re.sub(r"\W", "_", book["title"])
         image = chemin_image
     
         transformed_data.append({
@@ -109,6 +111,7 @@ def transformed_data_books(data,chemin_image) :
             "category" : category,
             "review_rating" : review_rating,
             "image_url" : image_url,
+            "nom_image" : nom_image,
             "chemin_image" : image
         })
     return transformed_data
@@ -117,7 +120,7 @@ def transformed_data_books(data,chemin_image) :
 
 def remplacement_note(note) :
 
-    # Fonction qui va transformer les notes récupérées en toutes lettres en chiffres.
+    # Fonction qui va transformer les notes qui on été récupérées en toutes lettres, en chiffres.
     remplacement = {
         "One" : "1 sur 5",
         "Two" : "2 sur 5",
@@ -132,3 +135,12 @@ def remplacement_note(note) :
         note_chiffre = "note non valide"
     
     return(note_chiffre)
+
+def verification_donnees(variable) :
+    # Fonction qui verifie la présence de données dans "variable"
+    # si "variable" est nul, la fonction lui attribu la valeur "donnée non trouvée"
+    # la fonction revoie "variable" modifier ou non
+    if variable is None :
+        variable = "donnée non trouvée"
+    return variable
+

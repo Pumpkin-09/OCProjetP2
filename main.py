@@ -18,7 +18,15 @@ def main(url):
     Elle utilise ensuite la fonction "load_data_books" pour les enregistrer dans des fichiers CSV.
     Elle appelle également la fonction "load_images" pour télécharger et renommer les images des livres.
     """
-    page = requests.get(url)
+    try :
+        page = requests.get(url)
+    except ConnectionError:
+        return print("Erreur de connexion : vérifiez votre connexion internet.")
+        raise
+    except Exception.NameResolutionError :
+        print("Erreur de résolution de nom : vérifiez l'adresse du site web ainsi que votre connexion internet.")
+        raise
+
     soup = BeautifulSoup(page.content, "html.parser")
 
     # Créer le dossier "dossier livres" s'il n'existe pas déjà

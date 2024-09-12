@@ -7,3 +7,6 @@ images/
 __pycache__/
 mail.txt
 retour cProfile.txt
+
+*csv
+*jpg

@@ -97,7 +97,7 @@ def transformed_data_books(data,chemin_image) :
         category = book["category"]
         review_rating = remplacement_note(book["review_rating"])
         image_url = book["image_url"]
-        nom_image = re.sub(r"\W", "_", book["title"])
+        nom_image = re.sub(r"\W", "_", book["title"]) + ".jpg"
         image = chemin_image
     
         transformed_data.append({

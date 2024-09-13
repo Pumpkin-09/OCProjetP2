@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import os
 from creation_csv import load_data_books
 import infos_livres
+import logging
 
 url = "http://books.toscrape.com"
 
@@ -18,6 +19,8 @@ def main(url):
     Elle utilise ensuite la fonction "load_data_books" pour les enregistrer dans des fichiers CSV.
     Elle appelle également la fonction "load_images" pour télécharger et renommer les images des livres.
     """
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
     try :
         page = requests.get(url)
     except ConnectionError:
@@ -55,7 +58,7 @@ def main(url):
     # #Téléchargement de l'image dans le dossier "images"
     #L'image est également renomé en fonction du nom du livre.    
     for i,j in zip(category_names,category_links) :
-        data_books = infos_livres.transformed_data_books(infos_livres.extract_data_books(j), dossier_images)
+        data_books = infos_livres.transformed_data_books(infos_livres.extract_data_books(j, i), dossier_images)
         load_data_books(i , dossier_livres, dossier_images, data_books)
 
 

@@ -2,9 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import re
+import logging
 
 
-def extract_data_books(url) :
+def extract_data_books(url, nom_categories) :
     """
     Fonction qui prend en paramètre un lien url.
     Elle va scrap des données via le lien.
@@ -13,6 +14,7 @@ def extract_data_books(url) :
     list_link = []
     link_book = []
 
+    logging.info(f"Début de la récupération des données des livres de la catégorie {nom_categories}")
     list_link.append(url)
     page = requests.get(url)
     soupe = BeautifulSoup(page.content, "html.parser")
@@ -141,6 +143,6 @@ def verification_donnees(variable) :
     # si "variable" est nul, la fonction lui attribu la valeur "donnée non trouvée"
     # la fonction revoie "variable" modifier ou non
     if variable is None :
-        variable = "donnée non trouvée"
+        variable = "Donnée non trouvée"
     return variable
 

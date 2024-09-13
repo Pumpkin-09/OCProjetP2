@@ -1,14 +1,16 @@
 import csv
 import requests
 import os
+import logging
 
 def load_data_books(nom, dossier_livres, dossier_images, donnees) :
     # Enregistrement des données dans un fichier CSV nommé en fonction de la catégorie.
     en_tete = ["product_page_url", "universal_product_code (upc)", "title", "price_including_tax", "price_excluding_tax", "number_available", "product_description", "category", "review_rating","image_url","nom_image", "chemin_image"]
     
     try :
+        logging.info(f"Création du fichier .csv de la catégorie {nom} et téléchargement des images des livres")
         name = os.path.join(dossier_livres, nom +".csv")
-        with open(name, "w", newline = "", encoding = "utf-8") as f :
+        with open(name, "w", encoding = "utf-8") as f :
             writer = csv.DictWriter(f, fieldnames=en_tete, delimiter = ",")
             writer.writeheader()
             for i in donnees :
@@ -16,7 +18,7 @@ def load_data_books(nom, dossier_livres, dossier_images, donnees) :
 
     except OSError as e :
         name = os.path.join(dossier_livres, "ERROR_NAME.csv")
-        with open(name, "w", newline = "", encoding = "utf-8") as f :
+        with open(name, "w", encoding = "utf-8") as f :
             writer = csv.DictWriter(f, fieldnames=en_tete, delimiter = ",")
             writer.writeheader()
             for i in donnees :

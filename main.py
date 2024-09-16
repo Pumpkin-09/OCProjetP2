@@ -16,8 +16,8 @@ def main(url):
     Ensuite, elle récupère les liens de toutes les catégories, qui va servir à nomé les fichiers csv.
     Elle appelle la fonction "extract_data_books" pour récupérer toutes les informations des différents livres.
     puis, elle appelle la fonction "transform_data_books" pour transformer ces données.
-    Elle utilise ensuite la fonction "load_data_books" pour les enregistrer dans des fichiers CSV.
-    Elle appelle également la fonction "load_images" pour télécharger et renommer les images des livres.
+    Elle utilise ensuite la fonction "load_data_books" pour les enregistrer dans des fichiers CSV,
+    puis pour télécharger les images et les enregistrer.
     """
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
